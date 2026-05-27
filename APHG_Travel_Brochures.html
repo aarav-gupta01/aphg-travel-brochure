@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Human Geography — World Travel Itinerary</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F9F5EE;
+  --ink:#1A1612;
+  --gold:#C9973A;
+  --gold-light:#F0D99A;
+  --rust:#8B3A2A;
+  --sage:#4A6741;
+  --slate:#2E3D4F;
+  --paper:#FDF8F0;
+  --border:#D4C9B8;
+}
+body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--ink);display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:12px 18px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#B0A898;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s}
+.nav-btn:hover{color:var(--gold-light)}
+.nav-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.nav-title{padding:12px 20px;font-family:'Playfair Display',serif;font-size:13px;color:var(--cream);border-right:1px solid #3A3530;white-space:nowrap;flex-shrink:0;margin-left:auto}
+.nav-btn:last-child{margin-right:auto}
+
+/* LAYOUT */
+.page-wrap{padding-top:48px}
+.country-section{display:none}
+.country-section.active{display:block}
+
+/* BROCHURE CONTAINER */
+.brochure{max-width:900px;margin:32px auto;display:grid;grid-template-columns:1fr 1fr;gap:0;box-shadow:0 20px 80px rgba(0,0,0,.3);border-radius:2px;overflow:hidden}
+
+/* FRONT PANEL */
+.front{background:var(--paper);position:relative;min-height:680px;display:flex;flex-direction:column}
+.front-hero{height:220px;position:relative;overflow:hidden;flex-shrink:0}
+.front-hero img{width:100%;height:100%;object-fit:cover}
+.front-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,22,18,0.1) 0%,rgba(26,22,18,0.7) 100%)}
+.front-hero-title{position:absolute;bottom:0;left:0;right:0;padding:20px 24px 18px}
+.country-number{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:4px}
+.country-name{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#fff;line-height:1;margin-bottom:2px}
+.country-sub{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.05em}
+
+.front-body{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:16px}
+
+.section-label{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.section-label::after{content:'';flex:1;height:0.5px;background:var(--gold);opacity:.4}
+
+.flight-card{background:var(--cream);border:0.5px solid var(--border);border-radius:4px;padding:12px 14px}
+.flight-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.flight-city{font-weight:500;font-size:13px}
+.flight-arrow{color:var(--gold);font-size:14px;flex:1;text-align:center}
+.flight-meta{display:flex;gap:8px 12px;margin-top:6px;font-size:11px;color:#6B5F52;flex-wrap:wrap}
+.flight-meta span{display:flex;align-items:center;gap:3px}
+.flight-card + .flight-card{margin-top:8px}
+
+.hotel-card{background:var(--cream);border:0.5px solid var(--border);border-radius:4px;padding:12px 14px}
+.hotel-name{font-weight:500;font-size:13px;margin-bottom:2px}
+.hotel-meta{font-size:11px;color:#6B5F52;display:flex;gap:10px;flex-wrap:wrap}
+
+.itinerary-item{display:flex;gap:10px;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
+.itinerary-item:last-child{border-bottom:none;padding-bottom:0}
+.day-badge{background:var(--ink);color:var(--gold);font-size:9px;font-weight:500;padding:3px 7px;border-radius:2px;letter-spacing:.1em;white-space:nowrap;height:fit-content;margin-top:1px}
+.itinerary-text{font-size:11px;line-height:1.5;color:#3A3028}
+.itinerary-text strong{font-weight:500;color:var(--ink)}
+
+.cost-bar{background:var(--ink);color:var(--cream);padding:12px 14px;margin:0 -24px -20px;display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.cost-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#8A8078}
+.cost-total{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold)}
+.cost-sub{font-size:10px;color:#8A8078}
+
+/* BACK PANEL */
+.back{background:var(--ink);position:relative;min-height:680px;display:flex;flex-direction:column}
+.back-accent{height:6px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%)}
+.back-body{padding:24px;flex:1;display:flex;flex-direction:column;gap:18px}
+
+.journal-section{}
+.journal-header{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--gold-light);margin-bottom:10px}
+.journal-date{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#6B6058;margin-bottom:8px}
+.journal-text{font-size:11px;line-height:1.7;color:#C2B9AD}
+
+.aphg-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.aphg-card{background:rgba(255,255,255,.05);border:0.5px solid rgba(201,151,58,.2);border-radius:4px;padding:10px 12px}
+.aphg-unit{font-size:8px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.aphg-concept{font-size:11px;font-weight:500;color:var(--cream);margin-bottom:2px}
+.aphg-desc{font-size:10px;line-height:1.5;color:#8A8078}
+
+.back-second-img{flex:1;min-height:180px;margin:0 -24px;overflow:hidden;position:relative}
+.back-second-img img{width:100%;height:100%;object-fit:cover;opacity:.5}
+.back-second-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--ink) 0%,transparent 30%,transparent 70%,var(--ink) 100%)}
+
+.back-footer{border-top:0.5px solid rgba(201,151,58,.2);padding-top:12px;display:flex;justify-content:space-between;align-items:flex-end}
+.back-footer-trip{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#4A4238}
+.back-footer-page{font-family:'Playfair Display',serif;font-size:14px;color:var(--gold);opacity:.6}
+
+/* PRINT */
+@media print{
+  .nav{display:none}
+  .page-wrap{padding-top:0}
+  .country-section{display:block!important}
+  .brochure{break-inside:avoid;margin:16px auto;box-shadow:none}
+  body{background:#fff}
+}
+
+/* TRANSPORT BADGES */
+.transport-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.t-badge{font-size:10px;padding:2px 8px;border-radius:2px;background:#F0E8DA;color:#5A4A3A;font-weight:500}
+
+/* TRIP MAP */
+.map-page{max-width:1080px;margin:32px auto;background:var(--paper);box-shadow:0 20px 80px rgba(0,0,0,.28);border-radius:2px;overflow:hidden}
+.map-hero{background:var(--ink);padding:28px 32px 22px;border-top:6px solid var(--gold)}
+.map-kicker{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.map-title{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;line-height:1;color:var(--cream)}
+.map-sub{font-size:12px;color:#B0A898;margin-top:8px;letter-spacing:.04em}
+.map-body{padding:28px 32px 32px}
+.map-canvas{position:relative;aspect-ratio:2/1;background:#E9EEF0;border:0.5px solid var(--border);overflow:hidden;border-radius:4px}
+.map-canvas::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(26,22,18,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(26,22,18,.08) 1px,transparent 1px),url('https://commons.wikimedia.org/wiki/Special:FilePath/BlankMap-World.svg');background-size:10% 20%,10% 20%,cover;background-position:center;opacity:.55}
+.route-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.route-line{fill:none;stroke:var(--rust);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.route-return{fill:none;stroke:var(--rust);stroke-width:3;stroke-dasharray:10 9;stroke-linecap:round;opacity:.75}
+.map-point{position:absolute;z-index:2;width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid var(--gold);color:var(--gold-light);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);transform:translate(-50%,-50%)}
+.map-point::after{content:attr(data-label);position:absolute;left:50%;top:30px;transform:translateX(-50%);background:rgba(26,22,18,.9);color:var(--cream);font-size:10px;font-weight:500;white-space:nowrap;padding:4px 7px;border-radius:3px}
+.map-point.above::after{top:auto;bottom:30px}
+.map-point.left::after{left:auto;right:30px;top:50%;transform:translateY(-50%)}
+.map-point.right::after{left:30px;top:50%;transform:translateY(-50%)}
+.map-trip-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:22px}
+.map-route-list,.map-summary{background:var(--cream);border:0.5px solid var(--border);border-radius:4px;padding:16px 18px}
+.map-route-list ol{list-style:none;counter-reset:leg;display:grid;gap:8px}
+.map-route-list li{counter-increment:leg;font-size:12px;line-height:1.45;color:#3A3028;padding-left:32px;position:relative}
+.map-route-list li::before{content:counter(leg);position:absolute;left:0;top:0;width:20px;height:20px;background:var(--ink);color:var(--gold);border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.map-summary-row{display:flex;justify-content:space-between;gap:12px;border-bottom:0.5px solid var(--border);padding:9px 0;font-size:12px}
+.map-summary-row:last-child{border-bottom:none}
+.map-summary-label{color:#6B5F52}
+.map-summary-value{font-weight:500;text-align:right}
+.map-note{font-size:10px;line-height:1.5;color:#6B5F52;margin-top:12px}
+
+/* ACTIVITY MAPS */
+.activity-map{height:170px;position:relative;overflow:hidden;border:0.5px solid var(--border);border-radius:4px;background:#F3F1E8;margin-top:8px}
+.activity-map::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);z-index:1;pointer-events:none}
+.osm-tiles{position:absolute;inset:0;z-index:0;background:#E8E5DA}
+.osm-tiles img{position:absolute;width:33.34%;height:50%;object-fit:cover}
+.osm-credit{position:absolute;right:4px;bottom:3px;z-index:5;background:rgba(255,255,255,.8);color:#5A4A3A;font-size:7px;padding:1px 4px;border-radius:2px}
+.map-water{display:none;position:absolute;z-index:1;background:#BFD8E8;border:1px solid rgba(88,124,148,.25);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.map-park{display:none;position:absolute;z-index:1;background:#C8DEB9;border:1px solid rgba(74,103,65,.22);border-radius:8px}
+.base-road{display:none;position:absolute;z-index:2;height:5px;background:#fff;border:1px solid #D8D0C4;border-radius:999px;box-shadow:0 1px 0 rgba(0,0,0,.04);transform-origin:left center}
+.base-road.major{height:7px;background:#F5D987;border-color:#D4B25E}
+.base-road.rail{height:3px;background:repeating-linear-gradient(90deg,#7F8FA3 0 8px,transparent 8px 13px);border:none}
+.map-label{display:none;position:absolute;z-index:2;color:#7A6E60;font-size:8px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;background:rgba(243,241,232,.7);padding:1px 4px;border-radius:3px;white-space:nowrap}
+.map-label.water{color:#4B7690;background:rgba(191,216,232,.65)}
+.map-label.park{color:#4A6741;background:rgba(200,222,185,.72)}
+.activity-route{position:absolute;inset:0;width:100%;height:100%;z-index:3}
+.activity-route path,.activity-route polyline{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.route-walk{stroke:var(--gold)}
+.route-transit{stroke:var(--slate)}
+.route-drive{stroke:var(--sage)}
+.route-flight{stroke:var(--rust);stroke-dasharray:8 7}
+.activity-pin{position:absolute;z-index:4;transform:translate(-50%,-50%);background:var(--ink);color:var(--cream);border:2px solid var(--gold);border-radius:3px;padding:3px 6px;font-size:9px;font-weight:500;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.activity-pin.major{background:var(--rust);border-color:var(--gold-light)}
+.activity-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.legend-chip{font-size:9px;color:#5A4A3A;display:flex;align-items:center;gap:4px}
+.legend-chip::before{content:'';width:18px;height:3px;border-radius:3px;background:var(--gold)}
+.legend-chip.transit::before{background:var(--slate)}
+.legend-chip.drive::before{background:var(--sage)}
+.legend-chip.flight::before{background:var(--rust)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-title">✈ APHG World Tour</div>
+  <button class="nav-btn active" onclick="show(0,this)">01 USA</button>
+  <button class="nav-btn" onclick="show(1,this)">02 T&T</button>
+  <button class="nav-btn" onclick="show(2,this)">03 Uruguay</button>
+  <button class="nav-btn" onclick="show(3,this)">04 Nigeria</button>
+  <button class="nav-btn" onclick="show(4,this)">05 France</button>
+  <button class="nav-btn" onclick="show(5,this)">06 Taiwan</button>
+  <button class="nav-btn" onclick="show(6,this)">07 Australia</button>
+  <button class="nav-btn" onclick="show(7,this)">Trip Map</button>
+</nav>
+
+<div class="page-wrap">
+
+<!-- ==================== COUNTRY 1: USA ==================== -->
+<div class="country-section active" id="c0">
+<div class="brochure">
+  <div class="front">
+    <div class="front-hero">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/WashingtonDCMallAerialNavyPhoto.jpg"
+           onerror="this.style.background='#2E3D4F';this.style.display='block'"
+           style="background:linear-gradient(135deg,#2E3D4F 0%,#1A2633 100%)"
+           alt="Washington DC">
+      <div class="front-hero-overlay"></div>
+      <div class="front-hero-title">
+        <div class="country-number">Stop 01 · North America</div>
+        <div class="country-name">U.S.A.</div>
+        <div class="country-sub">Washington D.C. &amp; New York City</div>
+      </div>
+    </div>
+    <div class="front-body">
+      <div>
+        <div class="section-label">Flight</div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">SFO</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">NYC</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 3 flight · trip Jun 3-5</span>
+            <span>✈ Alaska Airlines</span>
+            <span>🕕 Dep 6:15 AM</span>
+            <span>⏱ 5h 48m</span>
+            <span>💵 $312/person one way</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Accommodation</div>
+        <div class="hotel-card">
+          <div class="hotel-name">HI Washington DC Hostel — Capitol Hill</div>
+          <div class="hotel-meta">
+            <span>📍 1009 11th St NW</span>
+            <span>🛏 Dorm bunk ~$45/night</span>
+            <span>2 nights · ~$180 total (2 ppl)</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Stay Itinerary · Jun 3-5</div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 1</div>
+          <div class="itinerary-text"><strong>National Mall on foot.</strong> Lincoln Memorial → Vietnam Veterans Memorial → Washington Monument → U.S. Capitol exterior. All free. Lunch at a food truck on the Mall (~$12). Evening: walk Georgetown waterfront.</div>
+        </div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 2</div>
+          <div class="itinerary-text"><strong>Smithsonian museums</strong> (all free) — National Museum of Natural History + National Museum of African American History &amp; Culture. Afternoon: Amtrak to New York Penn Station (~$35/person, 3.5 hrs). Evening: walk Brooklyn Bridge + DUMBO.</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Activity Map</div>
+        <div class="activity-map" data-tile-z="11" data-tile-x="585" data-tile-y="783" aria-label="USA activity route map">
+          <div class="map-water" style="left:72%;top:4%;width:26%;height:46%;border-radius:0 0 0 45%"></div>
+          <div class="map-park" style="left:11%;top:46%;width:49%;height:16%"></div>
+          <div class="base-road major" style="left:10%;top:64%;width:55%;transform:rotate(-10deg)"></div>
+          <div class="base-road" style="left:22%;top:34%;width:44%;transform:rotate(24deg)"></div>
+          <div class="base-road rail" style="left:58%;top:43%;width:38%;transform:rotate(-30deg)"></div>
+          <span class="map-label park" style="left:28%;top:50%">National Mall</span>
+          <span class="map-label water" style="left:75%;top:10%">East River</span>
+          <span class="map-label" style="left:78%;top:27%">Manhattan</span>
+          <span class="map-label" style="left:68%;top:44%">Brooklyn</span>
+          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline class="route-walk" points="12,68 27,56 43,52 58,44"></polyline>
+            <path class="route-transit" d="M58,44 C72,30 84,25 91,17"></path>
+            <polyline class="route-walk" points="91,17 83,30 76,40"></polyline>
+          </svg>
+          <span class="activity-pin major" style="left:12%;top:68%">Lincoln</span>
+          <span class="activity-pin" style="left:43%;top:52%">Monument</span>
+          <span class="activity-pin" style="left:58%;top:44%">Capitol</span>
+          <span class="activity-pin major" style="left:91%;top:17%">NYC</span>
+          <span class="activity-pin" style="left:76%;top:40%">Brooklyn Bridge</span>
+        </div>
+        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">Train / Metro</span></div>
+      </div>
+      <div>
+        <div class="section-label">In-Country Transport</div>
+        <div class="transport-row">
+          <span class="t-badge">🚇 DC Metro $2.25/trip</span>
+          <span class="t-badge">🚶 Walking</span>
+          <span class="t-badge">🚂 Amtrak $35–70</span>
+        </div>
+      </div>
+      <div class="cost-bar">
+        <div><div class="cost-label">~Remaining Balance</div><div class="cost-sub">After USA · includes flights, lodging, food, activities</div></div>
+        <div class="cost-total">~$34,116</div>
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="back-accent"></div>
+    <div class="back-body">
+      <div class="journal-section">
+        <div class="journal-header">"Journal Entry — Washington D.C."</div>
+        <div class="journal-date">June 3-5, 2026</div>
+        <div class="journal-text">
+          Landing at Dulles after five and a half hours in the air, the scale of the city hits you differently than San Jose. Everything here is monumental by design. We started at the Lincoln Memorial at dawn — barely anyone else there — and just stood at the top of the steps looking east across the Reflecting Pool toward the Washington Monument. It is difficult not to feel the weight of the place. The Capitol dome, the Smithsonian row stretching for what feels like a mile — none of it happened by accident. This city was drawn on paper before the first brick was laid. That night we caught the Amtrak to New York. Brooklyn Bridge at 10pm, the Manhattan skyline blazing behind it, was worth every cent of the ticket.
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="color:var(--gold);font-size:9px;letter-spacing:.15em">APHuG Connections</div>
+        <div class="aphg-grid">
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">Forward Capital</div>
+            <div class="aphg-desc">DC was purpose-built on neutral land between Northern &amp; Southern states — neither Philadelphia nor New York given advantage. Analogous to Canberra and Abuja.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">No Primate City</div>
+            <div class="aphg-desc">USA follows the rank-size rule — power dispersed across NYC (finance), LA (media), Chicago, Houston. No single city dominates all functions.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 3</div>
+            <div class="aphg-concept">UN Language: English</div>
+            <div class="aphg-desc">English is one of 6 official UN languages. USA is the world's largest English-speaking country by GDP and cultural output.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 2</div>
+            <div class="aphg-concept">DTM Stage 4–5</div>
+            <div class="aphg-desc">Low birth rate, low death rate, aging population, near-zero natural increase. Net IN-migration country — immigration sustains population growth.</div>
+          </div>
+        </div>
+      </div>
+      <div class="back-second-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manhattan_from_Weehawken%2C_NJ.jpg" alt="New York City skyline">
+        <div class="back-second-img-overlay"></div>
+      </div>
+      <div class="back-footer">
+        <div class="back-footer-trip">AP Human Geography World Tour · 2026</div>
+        <div class="back-footer-page">01 / 07</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== COUNTRY 2: TRINIDAD ==================== -->
+<div class="country-section" id="c1">
+<div class="brochure">
+  <div class="front">
+    <div class="front-hero">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/TnT_PoS_Queen%27s_Park_Savannah.jpg"
+           style="background:linear-gradient(135deg,#1A3A2A 0%,#0D2016 100%)"
+           alt="Trinidad and Tobago">
+      <div class="front-hero-overlay"></div>
+      <div class="front-hero-title">
+        <div class="country-number">Stop 02 · The Caribbean</div>
+        <div class="country-name">Trinidad and Tobago</div>
+        <div class="country-sub">Port of Spain · Chaguanas · Pointe-à-Pierre</div>
+      </div>
+    </div>
+    <div class="front-body">
+      <div>
+        <div class="section-label">Flight</div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">JFK</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">POS (Port of Spain)</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 6 flight · trip Jun 6-8</span>
+            <span>✈ American Airlines</span>
+            <span>🕕 Dep 5:35 AM</span>
+            <span>⏱ 8h 36m</span>
+            <span>💵 $217/person one way</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Accommodation</div>
+        <div class="hotel-card">
+          <div class="hotel-name">Hyatt Regency Port of Spain</div>
+          <div class="hotel-meta">
+            <span>📍 1 Wrightson Rd, Port of Spain</span>
+            <span>🛏 Budget option: Ali's Guest House ~$55/night</span>
+            <span>2 nights · ~$220 total (2 ppl)</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Stay Itinerary · Jun 6-8</div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 1</div>
+          <div class="itinerary-text"><strong>Port of Spain city walk.</strong> Queen's Park Savannah → the Magnificent Seven colonial mansions → Red House Parliament building → Independence Square. Street food lunch: doubles (bara + curry chickpeas, ~$2). Evening: Maracas Bay beach (maxi-taxi, ~$3).</div>
+        </div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 2</div>
+          <div class="itinerary-text"><strong>Chaguanas</strong> (Indo-Trinidadian cultural center, ~30 min south by maxi-taxi). Visit Mid Centre Mall area, observe residential housing. Afternoon: Pointe-à-Pierre oil refinery district exterior view — petro-industrial landscape. Caroni Bird Sanctuary at dusk, boat tour to see scarlet ibis (~$25/person).</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Activity Map</div>
+        <div class="activity-map" data-tile-z="11" data-tile-x="674" data-tile-y="962" aria-label="Trinidad and Tobago activity route map">
+          <div class="map-water" style="left:0;top:0;width:100%;height:18%;border-radius:0 0 55% 40%"></div>
+          <div class="map-park" style="left:29%;top:25%;width:22%;height:18%"></div>
+          <div class="base-road major" style="left:18%;top:34%;width:70%;transform:rotate(5deg)"></div>
+          <div class="base-road" style="left:43%;top:38%;width:42%;transform:rotate(56deg)"></div>
+          <div class="base-road" style="left:38%;top:39%;width:30%;transform:rotate(82deg)"></div>
+          <span class="map-label water" style="left:9%;top:4%">Gulf of Paria</span>
+          <span class="map-label park" style="left:32%;top:30%">Queen's Park</span>
+          <span class="map-label" style="left:57%;top:33%">Eastern Main Rd</span>
+          <span class="map-label" style="left:57%;top:73%">Central Trinidad</span>
+          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline class="route-walk" points="22,30 34,35 42,32"></polyline>
+            <path class="route-transit" d="M42,32 C58,18 72,18 82,28"></path>
+            <path class="route-drive" d="M42,32 C45,58 54,72 64,82"></path>
+            <path class="route-drive" d="M64,82 C74,78 82,70 88,58"></path>
+          </svg>
+          <span class="activity-pin major" style="left:22%;top:30%">Port of Spain</span>
+          <span class="activity-pin" style="left:42%;top:32%">Savannah</span>
+          <span class="activity-pin" style="left:82%;top:28%">Maracas Bay</span>
+          <span class="activity-pin" style="left:64%;top:82%">Chaguanas</span>
+          <span class="activity-pin" style="left:88%;top:58%">Caroni</span>
+        </div>
+        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">Maxi-taxi</span><span class="legend-chip drive">Route taxi / car</span></div>
+      </div>
+      <div>
+        <div class="section-label">In-Country Transport</div>
+        <div class="transport-row">
+          <span class="t-badge">🚐 Maxi-taxi $1–3/trip</span>
+          <span class="t-badge">🚕 Route taxi $1–2</span>
+          <span class="t-badge">🚶 Walking</span>
+        </div>
+      </div>
+      <div class="cost-bar">
+        <div><div class="cost-label">~Remaining Balance</div><div class="cost-sub">After Trinidad and Tobago · includes flights, lodging, food, activities</div></div>
+        <div class="cost-total">~$33,302</div>
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="back-accent"></div>
+    <div class="back-body">
+      <div class="journal-section">
+        <div class="journal-header">"Journal Entry — Trinidad and Tobago"</div>
+        <div class="journal-date">June 6-8, 2026</div>
+        <div class="journal-text">
+          The heat here is different from California — wet and alive. Port of Spain buzzes with an energy that feels Caribbean in rhythm but East Indian in flavour, which makes complete sense once you understand the history. Half the island's population traces ancestry to indentured laborers brought from India after emancipation in 1834 — you can read it in the temples and mosques sitting beside churches, in the curry stalls beside the roti shops. The Magnificent Seven mansions along Queen's Park Savannah tell a different story — the colonial architecture of plantation wealth. The most memorable moment: watching thousands of scarlet ibis descend into the Caroni mangrove at sunset, turning the trees red.
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="color:var(--gold);font-size:9px;letter-spacing:.15em">APHuG Connections</div>
+        <div class="aphg-grid">
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 1</div>
+            <div class="aphg-concept">Caribbean Region</div>
+            <div class="aphg-desc">Trinidad and Tobago fulfills the Caribbean regional requirement — distinct from South America despite geographic proximity. Island state with unique cultural geography.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 3</div>
+            <div class="aphg-concept">Religious Diversity</div>
+            <div class="aphg-desc">Christianity (~65%), Hinduism (~22%), Islam (~5%) coexist — result of African, Indian, and European population mixing. Syncretic cultural landscape.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 7</div>
+            <div class="aphg-concept">Petroleum Export</div>
+            <div class="aphg-desc">Pointe-à-Pierre refinery: oil &amp; gas = #1 export. Location due to offshore field proximity and coastal infrastructure. Weber: resource-oriented industry.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 2</div>
+            <div class="aphg-concept">DTM Stage 3 + Out-migration</div>
+            <div class="aphg-desc">Declining birth rates, low death rates. Significant emigration to UK, USA, Canada — "brain drain" pattern common to small Caribbean nations.</div>
+          </div>
+        </div>
+      </div>
+      <div class="back-second-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/QPSpicfromhilton23.jpg" alt="Queens Park Savannah" style="opacity:.45">
+        <div class="back-second-img-overlay"></div>
+      </div>
+      <div class="back-footer">
+        <div class="back-footer-trip">AP Human Geography World Tour · 2026</div>
+        <div class="back-footer-page">02 / 07</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== COUNTRY 3: URUGUAY ==================== -->
+<div class="country-section" id="c2">
+<div class="brochure">
+  <div class="front">
+    <div class="front-hero">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2016_Mercado_del_Puerto_de_Montevideo.jpg"
+           style="background:linear-gradient(135deg,#1A2E3A 0%,#0D1C24 100%)"
+           alt="Montevideo">
+      <div class="front-hero-overlay"></div>
+      <div class="front-hero-title">
+        <div class="country-number">Stop 03 · South America</div>
+        <div class="country-name">Uruguay</div>
+        <div class="country-sub">Montevideo · Colonia del Sacramento</div>
+      </div>
+    </div>
+    <div class="front-body">
+      <div>
+        <div class="section-label">Flight</div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">POS</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">MVD (Montevideo)</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 9 flight · trip Jun 9-12</span>
+            <span>✈ Copa Airlines</span>
+            <span>🕕 Dep 3:50 AM</span>
+            <span>⏱ 20h 12m</span>
+            <span>💵 $1,312/person one way</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Accommodation</div>
+        <div class="hotel-card">
+          <div class="hotel-name">Che Lagarto Hostel Montevideo</div>
+          <div class="hotel-meta">
+            <span>📍 Canelones 1110, Ciudad Vieja</span>
+            <span>🛏 Dorm ~$22/night per person</span>
+            <span>3 nights · ~$132 total (2 ppl)</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Stay Itinerary · Jun 9-12</div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 1</div>
+          <div class="itinerary-text"><strong>Montevideo Ciudad Vieja.</strong> Plaza Independencia → Palacio Salvo → Teatro Solís → Mercado del Puerto (grilled beef lunch, ~$15). Walk Rambla waterfront promenade. Evening: Punta Carretas neighborhood — observe Haussmann-influenced apartment housing (Unit 6 typical home).</div>
+        </div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 2</div>
+          <div class="itinerary-text"><strong>Colonia del Sacramento</strong> day trip by Buquebus ferry (~$18/person, 1.5 hrs). UNESCO heritage colonial quarter: cobblestone streets, Portuguese &amp; Spanish layered architecture, 17th-century lighthouse. Return to Montevideo by evening bus (~$12).</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Activity Map</div>
+        <div class="activity-map" data-tile-z="11" data-tile-x="704" data-tile-y="1235" aria-label="Uruguay activity route map">
+          <div class="map-water" style="left:0;top:0;width:36%;height:100%;border-radius:0 45% 45% 0"></div>
+          <div class="map-water" style="left:38%;top:74%;width:60%;height:24%;border-radius:45% 0 0 0"></div>
+          <div class="map-park" style="left:47%;top:54%;width:20%;height:18%"></div>
+          <div class="base-road major" style="left:31%;top:45%;width:48%;transform:rotate(-5deg)"></div>
+          <div class="base-road" style="left:43%;top:31%;width:32%;transform:rotate(54deg)"></div>
+          <div class="base-road rail" style="left:15%;top:39%;width:48%;transform:rotate(9deg)"></div>
+          <span class="map-label water" style="left:5%;top:17%">Rio de la Plata</span>
+          <span class="map-label" style="left:55%;top:36%">Ciudad Vieja</span>
+          <span class="map-label park" style="left:49%;top:59%">Rambla</span>
+          <span class="map-label" style="left:12%;top:31%">Colonia</span>
+          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline class="route-walk" points="62,42 52,52 42,55 34,64"></polyline>
+            <path class="route-transit" d="M62,42 C44,25 27,25 15,38"></path>
+            <path class="route-transit" d="M15,38 C28,53 44,58 62,42"></path>
+          </svg>
+          <span class="activity-pin major" style="left:62%;top:42%">Montevideo</span>
+          <span class="activity-pin" style="left:52%;top:52%">Plaza</span>
+          <span class="activity-pin" style="left:34%;top:64%">Rambla</span>
+          <span class="activity-pin major" style="left:15%;top:38%">Colonia</span>
+        </div>
+        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">Ferry / bus</span></div>
+      </div>
+      <div>
+        <div class="section-label">In-Country Transport</div>
+        <div class="transport-row">
+          <span class="t-badge">⛴ Buquebus ferry $18</span>
+          <span class="t-badge">🚌 Local bus $0.80</span>
+          <span class="t-badge">🚶 Walking</span>
+        </div>
+      </div>
+      <div class="cost-bar">
+        <div><div class="cost-label">~Remaining Balance</div><div class="cost-sub">After Uruguay · includes flights, lodging, food, activities</div></div>
+        <div class="cost-total">~$30,282</div>
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="back-accent"></div>
+    <div class="back-body">
+      <div class="journal-section">
+        <div class="journal-header">"Journal Entry — Uruguay"</div>
+        <div class="journal-date">June 9-12, 2026</div>
+        <div class="journal-text">
+          Montevideo surprised me. After the Caribbean intensity of Port of Spain, this city feels deliberate and quiet — a southern European temperament transplanted to the southern tip of South America. Nearly 90% of Uruguay's population is of European descent, and you feel it in the architecture, the café culture, and the pace of the streets. The Mercado del Puerto on Saturday was unforgettable — the smell of wood fires and grilling beef filling the entire iron-and-glass market hall, gauchos in berets eating standing up. Colonia del Sacramento was even more striking: a town where Portuguese and Spanish colonial histories literally face each other across the same cobblestones, a landscape of competing empires frozen in time.
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="color:var(--gold);font-size:9px;letter-spacing:.15em">APHuG Connections</div>
+        <div class="aphg-grid">
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">Primate City ✅</div>
+            <div class="aphg-desc">Montevideo holds ~54% of Uruguay's population and produces 65% of GDP — textbook primate city dominance in a small unitary state.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 3</div>
+            <div class="aphg-concept">UN Language: Spanish</div>
+            <div class="aphg-desc">Spanish is one of the 6 UN official languages. Uruguay's Spanish reflects Rioplatense dialect influence — distinct from Castilian or Mexican Spanish.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 6</div>
+            <div class="aphg-concept">Typical Home</div>
+            <div class="aphg-desc">Punta Carretas: Art Deco &amp; modernist apartment blocks represent typical Uruguayan middle-class urban housing — not folk, vernacular contemporary.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 2</div>
+            <div class="aphg-concept">DTM Stage 4–5</div>
+            <div class="aphg-desc">Uruguay: low birth rate, low death rate, aging population — one of Latin America's most demographically advanced nations. Net in-migration in recent decades.</div>
+          </div>
+        </div>
+      </div>
+      <div class="back-second-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Palacio_Salvo_Montevideo_Uruguay.jpg" alt="Palacio Salvo" style="opacity:.45">
+        <div class="back-second-img-overlay"></div>
+      </div>
+      <div class="back-footer">
+        <div class="back-footer-trip">AP Human Geography World Tour · 2026</div>
+        <div class="back-footer-page">03 / 07</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== COUNTRY 4: NIGERIA ==================== -->
+<div class="country-section" id="c3">
+<div class="brochure">
+  <div class="front">
+    <div class="front-hero">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_City_Gate_of_Abuja.jpg"
+           style="background:linear-gradient(135deg,#3A2010 0%,#241408 100%)"
+           alt="Nigeria">
+      <div class="front-hero-overlay"></div>
+      <div class="front-hero-title">
+        <div class="country-number">Stop 04 · Sub-Saharan Africa</div>
+        <div class="country-name">Nigeria</div>
+        <div class="country-sub">Lagos · Abuja · Ondo State</div>
+      </div>
+    </div>
+    <div class="front-body">
+      <div>
+        <div class="section-label">Flight</div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">MVD</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">LOS (Lagos)</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 12 flight · trip Jun 13-14</span>
+            <span>✈ Qatar Airways / Airlines Brasil</span>
+            <span>🕛 Dep 12:00 PM</span>
+            <span>⏱ 39h 25m</span>
+            <span>💵 $1,287/person one way</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Accommodation</div>
+        <div class="hotel-card">
+          <div class="hotel-name">Lagos: Mainland Hotel (~$60/night) · Abuja: Garki Suites (~$55/night)</div>
+          <div class="hotel-meta">
+            <span>📍 Lagos Day 1 · Abuja Day 2</span>
+            <span>2 nights · ~$230 total (2 ppl)</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Stay Itinerary · Jun 13-14</div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 1</div>
+          <div class="itinerary-text"><strong>Lagos</strong> — National Museum Lagos (Nok terracotta sculptures) → Lekki Free Zone exterior view (Chinese-Nigerian SEZ) → Balogun Market → street food: jollof rice + suya ~$4. Evening flight Lagos → Abuja (~$60/person, 1 hr).</div>
+        </div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 2</div>
+          <div class="itinerary-text"><strong>Abuja</strong> — Aso Rock vista + Nigerian National Mosque + National Christian Centre (religious landscape). Afternoon: road trip south toward Ondo State cocoa belt — Ile-Oluji cocoa processing facility + smallholder farm visit (~$30 guided tour). Return Abuja overnight.</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Activity Map</div>
+        <div class="activity-map" data-tile-z="11" data-tile-x="1043" data-tile-y="986" aria-label="Nigeria activity route map">
+          <div class="map-water" style="left:0;top:62%;width:48%;height:34%;border-radius:0 45% 0 0"></div>
+          <div class="map-park" style="left:53%;top:56%;width:22%;height:28%"></div>
+          <div class="base-road major" style="left:18%;top:62%;width:35%;transform:rotate(4deg)"></div>
+          <div class="base-road major" style="left:58%;top:32%;width:28%;transform:rotate(-38deg)"></div>
+          <div class="base-road rail" style="left:47%;top:63%;width:38%;transform:rotate(-58deg)"></div>
+          <span class="map-label water" style="left:8%;top:78%">Lagos Lagoon</span>
+          <span class="map-label" style="left:20%;top:49%">Lagos Island</span>
+          <span class="map-label" style="left:72%;top:18%">Abuja</span>
+          <span class="map-label park" style="left:56%;top:66%">Cocoa Belt</span>
+          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline class="route-walk" points="22,62 34,54 45,66"></polyline>
+            <path class="route-flight" d="M45,66 C58,38 70,28 78,22"></path>
+            <polyline class="route-drive" points="78,22 68,42 57,68"></polyline>
+          </svg>
+          <span class="activity-pin major" style="left:22%;top:62%">Lagos</span>
+          <span class="activity-pin" style="left:34%;top:54%">Museum</span>
+          <span class="activity-pin" style="left:45%;top:66%">Balogun</span>
+          <span class="activity-pin major" style="left:78%;top:22%">Abuja</span>
+          <span class="activity-pin" style="left:57%;top:68%">Ondo Cocoa</span>
+        </div>
+        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip flight">Domestic flight</span><span class="legend-chip drive">Car hire</span></div>
+      </div>
+      <div>
+        <div class="section-label">In-Country Transport</div>
+        <div class="transport-row">
+          <span class="t-badge">✈ Lagos–Abuja flight $60</span>
+          <span class="t-badge">🚕 Danfo bus $0.50–2</span>
+          <span class="t-badge">🚗 Car hire ~$80/day</span>
+        </div>
+      </div>
+      <div class="cost-bar">
+        <div><div class="cost-label">~Remaining Balance</div><div class="cost-sub">After Nigeria · includes flights, lodging, food, activities</div></div>
+        <div class="cost-total">~$27,108</div>
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="back-accent"></div>
+    <div class="back-body">
+      <div class="journal-section">
+        <div class="journal-header">"Journal Entry — Nigeria"</div>
+        <div class="journal-date">June 13-14, 2026</div>
+        <div class="journal-text">
+          Lagos is overwhelming in the best way. The city never stops moving — Danfo buses painted yellow, motorcycle okadas weaving through traffic, hawkers selling anything imaginable through car windows. Balogun Market in Lagos Island is one of the largest street markets in West Africa; you could spend a day and not see all of it. The flight to Abuja felt like traveling to a different country: orderly roundabouts, wide government boulevards, the Nigerian National Mosque and National Christian Centre standing within view of each other — a deliberate architectural statement about national unity. Then Ondo State: rows of cocoa trees in the red laterite soil, farmers in their thirties telling us the trees their grandparents planted still produce. The cocoa processing facility smelled extraordinary.
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="color:var(--gold);font-size:9px;letter-spacing:.15em">APHuG Connections</div>
+        <div class="aphg-grid">
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">Primate City ✅ (Lagos)</div>
+            <div class="aphg-desc">Lagos = Nigeria's primate city — economic, cultural, and demographic dominance. Abuja = forward capital (purpose-built 1991 for ethnic neutrality).</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 7</div>
+            <div class="aphg-concept">Factory: Cocoa Processing</div>
+            <div class="aphg-desc">Cocoa Products IleOluji Ltd, Ondo State: produces cocoa butter &amp; powder for export. Located here — Weber's resource-orientation (raw material proximity).</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 5</div>
+            <div class="aphg-concept">Extensive Agriculture</div>
+            <div class="aphg-desc">Ondo State cocoa: smallholder farms avg. 2–3 ha, low capital input per unit area, spread across wide tropical forest zone. Classic extensive model.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 2</div>
+            <div class="aphg-concept">DTM Stage 2–3</div>
+            <div class="aphg-desc">High birth rate, rapidly declining death rate, population explosion. Nigeria: fastest-growing large population on Earth; projected #3 globally by 2050.</div>
+          </div>
+        </div>
+      </div>
+      <div class="back-second-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Abuja_Skyline.jpg" alt="Abuja skyline" style="opacity:.45">
+        <div class="back-second-img-overlay"></div>
+      </div>
+      <div class="back-footer">
+        <div class="back-footer-trip">AP Human Geography World Tour · 2026</div>
+        <div class="back-footer-page">04 / 07</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== COUNTRY 5: FRANCE ==================== -->
+<div class="country-section" id="c4">
+<div class="brochure">
+  <div class="front">
+    <div class="front-hero">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Eiffel_Tower_from_Champ-de-Mars.jpg"
+           style="background:linear-gradient(135deg,#1A1C2E 0%,#0E0F1A 100%)"
+           alt="Paris France">
+      <div class="front-hero-overlay"></div>
+      <div class="front-hero-title">
+        <div class="country-number">Stop 05 · Europe</div>
+        <div class="country-name">France</div>
+        <div class="country-sub">Paris · Versailles</div>
+      </div>
+    </div>
+    <div class="front-body">
+      <div>
+        <div class="section-label">Flight</div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">ABV (Abuja)</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">CDG (Paris)</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 15 flight · trip Jun 15-17</span>
+            <span>✈ Royal Air Maroc</span>
+            <span>🕕 Dep 6:55 AM</span>
+            <span>⏱ 9h 25m</span>
+            <span>💵 $545/person</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Accommodation</div>
+        <div class="hotel-card">
+          <div class="hotel-name">Generator Paris Hostel — République</div>
+          <div class="hotel-meta">
+            <span>📍 9–11 Place du Colonel Fabien, 10e</span>
+            <span>🛏 Dorm ~$35/night per person</span>
+            <span>2 nights · ~$280 total (2 ppl)</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Stay Itinerary · Jun 15-17</div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 1</div>
+          <div class="itinerary-text"><strong>Paris on foot.</strong> Musée d'Orsay (free under 26) → picnic lunch on Champ de Mars with Eiffel Tower view (~$8) → Le Marais district walk — Haussmann apartment facades (Unit 6 typical home observation) → Notre-Dame exterior (restored 2024). Dinner: crêpe from street vendor ~$5.</div>
+        </div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 2</div>
+          <div class="itinerary-text"><strong>Versailles</strong> by RER C (~$5 round trip, 40 min). Palace gardens free on weekdays. Afternoon: return Paris, visit Sacré-Cœur in Montmartre. Drive past Renault Flins factory corridor on way to/from CDG — industrial landscape of the Île-de-France automobile belt.</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Activity Map</div>
+        <div class="activity-map" data-tile-z="11" data-tile-x="1037" data-tile-y="704" aria-label="France activity route map">
+          <div class="map-water" style="left:37%;top:48%;width:45%;height:10%;border-radius:999px;transform:rotate(-18deg)"></div>
+          <div class="map-park" style="left:10%;top:63%;width:20%;height:18%"></div>
+          <div class="map-park" style="left:58%;top:23%;width:18%;height:15%"></div>
+          <div class="base-road major" style="left:36%;top:58%;width:42%;transform:rotate(-20deg)"></div>
+          <div class="base-road" style="left:48%;top:29%;width:27%;transform:rotate(88deg)"></div>
+          <div class="base-road rail" style="left:17%;top:72%;width:42%;transform:rotate(-12deg)"></div>
+          <span class="map-label water" style="left:48%;top:49%">Seine</span>
+          <span class="map-label" style="left:51%;top:61%">Central Paris</span>
+          <span class="map-label park" style="left:11%;top:68%">Versailles</span>
+          <span class="map-label" style="left:64%;top:25%">Montmartre</span>
+          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline class="route-walk" points="56,58 48,48 54,38 64,32"></polyline>
+            <path class="route-transit" d="M56,58 C40,66 28,68 18,72"></path>
+            <path class="route-drive" d="M18,72 C32,82 52,82 70,70"></path>
+          </svg>
+          <span class="activity-pin major" style="left:56%;top:58%">Paris</span>
+          <span class="activity-pin" style="left:48%;top:48%">Orsay</span>
+          <span class="activity-pin" style="left:64%;top:32%">Montmartre</span>
+          <span class="activity-pin major" style="left:18%;top:72%">Versailles</span>
+          <span class="activity-pin" style="left:70%;top:70%">Renault</span>
+        </div>
+        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">RER / Metro</span><span class="legend-chip drive">Drive-by</span></div>
+      </div>
+      <div>
+        <div class="section-label">In-Country Transport</div>
+        <div class="transport-row">
+          <span class="t-badge">🚇 Métro €1.90/trip</span>
+          <span class="t-badge">🚂 RER C to Versailles €5</span>
+          <span class="t-badge">🚶 Walking</span>
+        </div>
+      </div>
+      <div class="cost-bar">
+        <div><div class="cost-label">~Remaining Balance</div><div class="cost-sub">After France · includes flights, lodging, food, activities</div></div>
+        <div class="cost-total">~$25,398</div>
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="back-accent"></div>
+    <div class="back-body">
+      <div class="journal-section">
+        <div class="journal-header">"Journal Entry — France"</div>
+        <div class="journal-date">June 15-17, 2026</div>
+        <div class="journal-text">
+          Paris hits differently after two weeks in the Americas and West Africa. The city is dense in a way that feels intentional — every block a deliberate composition of matching limestone facades, wrought-iron balconies at uniform height, the odd church spire punctuating the skyline. Baron Haussmann's 19th-century renovation is still visible in virtually every direction. Versailles was genuinely staggering — not just the palace but the gardens extending to the horizon, the sheer statement of absolute power encoded in landscape design. The restored Notre-Dame, pale and almost blindingly white after the fire repairs, was quieter than expected. We ate baguette sandwiches by the Seine and watched the evening light turn the river gold.
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="color:var(--gold);font-size:9px;letter-spacing:.15em">APHuG Connections</div>
+        <div class="aphg-grid">
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">Primate City ✅</div>
+            <div class="aphg-desc">Paris metro (~12M) dwarfs Lyon (2nd, ~2.2M) by factor of 5.5×. Textbook example in APHuG. Also an alpha++ global city per Sassen's framework.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 3</div>
+            <div class="aphg-concept">UN Language: French</div>
+            <div class="aphg-desc">French is one of 6 UN official languages. France's historic language policy (Académie française) is itself a centripetal cultural force — Unit 4 crossover.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 7</div>
+            <div class="aphg-concept">Factory: Renault Flins</div>
+            <div class="aphg-desc">Auto assembly plant ~60 km west of Paris. Agglomeration: skilled labor pool + Seine transport corridor + supplier cluster in Île-de-France (Weber).</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 6</div>
+            <div class="aphg-concept">Typical Home</div>
+            <div class="aphg-desc">Haussmann apartment block — 6-story limestone, uniform cornice, wrought-iron balconies — is the defining Parisian residential vernacular, built 1850s–1870s.</div>
+          </div>
+        </div>
+      </div>
+      <div class="back-second-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ch%C3%A2teau_de_Versailles_-_Nuit.jpg" alt="Versailles" style="opacity:.45">
+        <div class="back-second-img-overlay"></div>
+      </div>
+      <div class="back-footer">
+        <div class="back-footer-trip">AP Human Geography World Tour · 2026</div>
+        <div class="back-footer-page">05 / 07</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== COUNTRY 6: TAIWAN ==================== -->
+<div class="country-section" id="c5">
+<div class="brochure">
+  <div class="front">
+    <div class="front-hero">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Taipei_skyline_from_Elephant_Mountain.jpg"
+           style="background:linear-gradient(135deg,#0D1A2E 0%,#060E1A 100%)"
+           alt="Taipei Taiwan">
+      <div class="front-hero-overlay"></div>
+      <div class="front-hero-title">
+        <div class="country-number">Stop 06 · Asia</div>
+        <div class="country-name">Taiwan</div>
+        <div class="country-sub">Taipei · Hsinchu · Jiufen</div>
+      </div>
+    </div>
+    <div class="front-body">
+      <div>
+        <div class="section-label">Flight</div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">CDG (Paris)</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">TPE (Taipei)</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 17 flight · trip Jun 18-19</span>
+            <span>✈ Multiple airlines</span>
+            <span>🕜 Dep 1:25 PM</span>
+            <span>⏱ 15h 35m</span>
+            <span>💵 $565/person</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Accommodation</div>
+        <div class="hotel-card">
+          <div class="hotel-name">Star Hostel Taipei Main Station</div>
+          <div class="hotel-meta">
+            <span>📍 No. 1, Lane 107, Sec. 1, Zhongxiao W. Rd</span>
+            <span>🛏 Dorm ~$18/night per person</span>
+            <span>1 night · ~$36 total (2 ppl)</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Stay Itinerary · Jun 18-19</div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 1</div>
+          <div class="itinerary-text"><strong>Taipei.</strong> Longshan Temple (Buddhist, Unit 3 religious site) → Chiang Kai-shek Memorial Hall → Taipei 101 observation deck (~$18) → Shilin Night Market dinner (~$10). Morning: National Palace Museum (2.4 million artifacts from Chinese imperial history).</div>
+        </div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 2</div>
+          <div class="itinerary-text"><strong>Hsinchu</strong> by HSR (~$8, 35 min) → TSMC Museum of Innovation at Hsinchu Science Park (~$10 entry) — semiconductor export industry. Afternoon: bus to <strong>Jiufen</strong> (~1 hr) — former gold-mining village, hillside teahouses, stone steps. Return Taipei by express bus.</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Activity Map</div>
+        <div class="activity-map" data-tile-z="11" data-tile-x="1715" data-tile-y="876" aria-label="Taiwan activity route map">
+          <div class="map-water" style="left:78%;top:0;width:22%;height:100%;border-radius:45% 0 0 45%"></div>
+          <div class="map-park" style="left:63%;top:23%;width:19%;height:24%"></div>
+          <div class="base-road major" style="left:28%;top:70%;width:52%;transform:rotate(-44deg)"></div>
+          <div class="base-road" style="left:43%;top:31%;width:25%;transform:rotate(58deg)"></div>
+          <div class="base-road rail" style="left:28%;top:77%;width:31%;transform:rotate(-46deg)"></div>
+          <span class="map-label water" style="left:84%;top:53%">Pacific</span>
+          <span class="map-label" style="left:41%;top:27%">Taipei Basin</span>
+          <span class="map-label park" style="left:66%;top:31%">Mountain towns</span>
+          <span class="map-label" style="left:20%;top:80%">Hsinchu</span>
+          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline class="route-walk" points="48,34 56,42 62,54"></polyline>
+            <path class="route-transit" d="M48,34 C35,45 30,62 26,78"></path>
+            <path class="route-drive" d="M48,34 C65,28 78,30 88,40"></path>
+          </svg>
+          <span class="activity-pin major" style="left:48%;top:34%">Taipei</span>
+          <span class="activity-pin" style="left:56%;top:42%">CKS Hall</span>
+          <span class="activity-pin" style="left:62%;top:54%">Taipei 101</span>
+          <span class="activity-pin major" style="left:26%;top:78%">Hsinchu</span>
+          <span class="activity-pin" style="left:88%;top:40%">Jiufen</span>
+        </div>
+        <div class="activity-legend"><span class="legend-chip">Walking / MRT</span><span class="legend-chip transit">HSR</span><span class="legend-chip drive">Bus</span></div>
+      </div>
+      <div>
+        <div class="section-label">In-Country Transport</div>
+        <div class="transport-row">
+          <span class="t-badge">🚄 HSR Taipei–Hsinchu $8</span>
+          <span class="t-badge">🚇 MRT $0.80–2</span>
+          <span class="t-badge">🚌 Bus to Jiufen $3</span>
+        </div>
+      </div>
+      <div class="cost-bar">
+        <div><div class="cost-label">~Remaining Balance</div><div class="cost-sub">After Taiwan · includes flights, lodging, food, activities</div></div>
+        <div class="cost-total">~$23,976</div>
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="back-accent"></div>
+    <div class="back-body">
+      <div class="journal-section">
+        <div class="journal-header">"Journal Entry — Taiwan"</div>
+        <div class="journal-date">June 18-19, 2026</div>
+        <div class="journal-text">
+          Taiwan runs on a different clock. Taipei at 7am is already fully in motion — breakfast stalls selling scallion pancakes and soy milk, office workers in the MRT stations, the air carrying that particular warm humidity that seems to define East Asian cities at dawn. The TSMC Museum in Hsinchu was the highlight I didn't expect. Standing in front of a chip the size of your fingernail that contains 15 billion transistors — made here, in this science park, by 80,000 people — you understand why Taiwan sits at the center of the global technology supply chain. Jiufen in the late afternoon, the teahouses lit gold against the Pacific below, was the other end of the spectrum: a reminder of what Taiwan looked like before the transistors.
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="color:var(--gold);font-size:9px;letter-spacing:.15em">APHuG Connections</div>
+        <div class="aphg-grid">
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 7</div>
+            <div class="aphg-concept">Factory: TSMC Hsinchu</div>
+            <div class="aphg-desc">~70% of global semiconductor foundry market share. Located at Hsinchu Science Park — gov't-subsidized technopole, NCTU talent pipeline, full supply-chain agglomeration.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 3</div>
+            <div class="aphg-concept">UN Language: Chinese</div>
+            <div class="aphg-desc">Mandarin Chinese is one of 6 UN official languages. Taiwan uses Traditional characters — distinct from PRC Simplified script — a cultural-political identity marker.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">Capital: Taipei</div>
+            <div class="aphg-desc">Taipei is Taiwan's political, economic, and cultural capital. Note: New Taipei City (4M+) is technically more populous — primate city classification is debated.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 2</div>
+            <div class="aphg-concept">DTM Stage 5</div>
+            <div class="aphg-desc">Taiwan has one of the world's lowest birth rates (under 1.0 TFR in recent years). Rapid aging, population decline — late-stage demographic transition.</div>
+          </div>
+        </div>
+      </div>
+      <div class="back-second-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2015-05-11_Jiufen_Old_Street.jpg" alt="Jiufen Taiwan" style="opacity:.45">
+        <div class="back-second-img-overlay"></div>
+      </div>
+      <div class="back-footer">
+        <div class="back-footer-trip">AP Human Geography World Tour · 2026</div>
+        <div class="back-footer-page">06 / 07</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== COUNTRY 7: AUSTRALIA ==================== -->
+<div class="country-section" id="c6">
+<div class="brochure">
+  <div class="front">
+    <div class="front-hero">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/ANZAC_Parade_from_the_Australian_War_Memorial%2C_Canberra_ACT.jpg"
+           style="background:linear-gradient(135deg,#1A2E1A 0%,#0D1C0D 100%)"
+           alt="Canberra Australia">
+      <div class="front-hero-overlay"></div>
+      <div class="front-hero-title">
+        <div class="country-number">Stop 07 · Australia / Oceania</div>
+        <div class="country-name">Australia</div>
+        <div class="country-sub">Canberra · Sydney Blue Mountains</div>
+      </div>
+    </div>
+    <div class="front-body">
+      <div>
+        <div class="section-label">Flight</div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">TPE (Taipei)</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">CBR (Canberra)</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 19 flight · trip Jun 20-24</span>
+            <span>✈ Multiple airlines</span>
+            <span>🕧 Dep 12:20 PM</span>
+            <span>⏱ 18h 40m</span>
+            <span>💵 $905/person</span>
+          </div>
+        </div>
+        <div class="flight-card">
+          <div class="flight-row">
+            <span class="flight-city">Australia</span>
+            <span class="flight-arrow">──✈──</span>
+            <span class="flight-city">SFO</span>
+          </div>
+          <div class="flight-meta">
+            <span>🗓 Jun 24 return flight</span>
+            <span>✈ Philippine Airlines</span>
+            <span>🕙 Dep 10:15 AM</span>
+            <span>⏱ 27h 55m</span>
+            <span>💵 $866/person</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Accommodation</div>
+        <div class="hotel-card">
+          <div class="hotel-name">Blue and White Lodge Canberra</div>
+          <div class="hotel-meta">
+            <span>📍 524 Northbourne Ave, Downer ACT</span>
+            <span>🛏 Budget room ~$65/night (2 ppl)</span>
+            <span>4 nights · ~$260 total</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Stay Itinerary · Jun 20-24</div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 1</div>
+          <div class="itinerary-text"><strong>Canberra.</strong> Parliament House (free entry, guided tour available) → Australian War Memorial (free) → National Gallery of Australia (free) → walk Lake Burley Griffin foreshore. Drive through Belconnen or Tuggeranong suburbs — typical detached Australian housing (Unit 6 home observation).</div>
+        </div>
+        <div class="itinerary-item">
+          <div class="day-badge">DAY 2</div>
+          <div class="itinerary-text"><strong>Blue Mountains day trip</strong> (3.5 hr drive or train via Sydney). Three Sisters rock formation, Katoomba — UNESCO World Heritage. Rural/natural contrast to planned urban Canberra. Return flight: CBR → SFO via Sydney (~$980/person, ~15 hrs).</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Activity Map</div>
+        <div class="activity-map" data-tile-z="11" data-tile-x="1872" data-tile-y="1238" aria-label="Australia activity route map">
+          <div class="map-water" style="left:43%;top:53%;width:27%;height:10%;border-radius:999px;transform:rotate(-12deg)"></div>
+          <div class="map-park" style="left:74%;top:13%;width:20%;height:22%"></div>
+          <div class="map-park" style="left:24%;top:47%;width:34%;height:24%"></div>
+          <div class="base-road major" style="left:27%;top:64%;width:33%;transform:rotate(-32deg)"></div>
+          <div class="base-road major" style="left:55%;top:54%;width:35%;transform:rotate(-42deg)"></div>
+          <div class="base-road rail" style="left:30%;top:80%;width:61%;transform:rotate(-50deg)"></div>
+          <span class="map-label water" style="left:44%;top:55%">Lake Burley Griffin</span>
+          <span class="map-label park" style="left:31%;top:54%">Parliamentary Zone</span>
+          <span class="map-label park" style="left:75%;top:20%">Blue Mountains</span>
+          <span class="map-label" style="left:24%;top:74%">Canberra</span>
+          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline class="route-walk" points="28,62 36,52 46,45 55,56"></polyline>
+            <path class="route-drive" d="M55,56 C68,38 78,30 88,22"></path>
+            <path class="route-transit" d="M88,22 C72,58 52,75 30,82"></path>
+          </svg>
+          <span class="activity-pin major" style="left:28%;top:62%">Canberra</span>
+          <span class="activity-pin" style="left:36%;top:52%">Parliament</span>
+          <span class="activity-pin" style="left:55%;top:56%">Lake</span>
+          <span class="activity-pin major" style="left:88%;top:22%">Blue Mtns</span>
+          <span class="activity-pin" style="left:30%;top:82%">CBR</span>
+        </div>
+        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip drive">Drive</span><span class="legend-chip transit">Return transit</span></div>
+      </div>
+      <div>
+        <div class="section-label">In-Country Transport</div>
+        <div class="transport-row">
+          <span class="t-badge">🚌 ACTION bus $2.80</span>
+          <span class="t-badge">🚗 Car hire ~$60/day</span>
+          <span class="t-badge">🚂 Train to Blue Mtns ~$20</span>
+        </div>
+      </div>
+      <div class="cost-bar">
+        <div><div class="cost-label">~Remaining Balance</div><div class="cost-sub">After Australia and return flight · includes flights, lodging, food, activities</div></div>
+        <div class="cost-total">~$19,714</div>
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="back-accent"></div>
+    <div class="back-body">
+      <div class="journal-section">
+        <div class="journal-header">"Journal Entry — Australia"</div>
+        <div class="journal-date">June 20-24, 2026</div>
+        <div class="journal-text">
+          Canberra feels like a city that was designed by committee — and I mean that in the best possible way. Every street leads somewhere logical, the lake sits at the center like a hinge, and Parliament House is literally built into a hill so the grass of Capital Hill continues over its roof. No city in the world looks quite like it. You can see Walter Burley Griffin's geometric master plan from high ground: the land axes, the water axis, the radial avenues converging on ceremonial precincts. The Blue Mountains the next day were something else entirely — eucalyptus forest stretching in every direction, the Three Sisters rising above the Jamison Valley. Somewhere between Canberra's deliberate order and the Blue Mountains' ancient indifference, you get the full range of what Australia actually is.
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="color:var(--gold);font-size:9px;letter-spacing:.15em">APHuG Connections</div>
+        <div class="aphg-grid">
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">Forward Capital ✅</div>
+            <div class="aphg-desc">Canberra: purpose-built 1913 as compromise between Sydney &amp; Melbourne. Neutral territory carved from NSW. Designed by Griffin after intl. competition — classic forward capital.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 4</div>
+            <div class="aphg-concept">No Primate City</div>
+            <div class="aphg-desc">Australia is a federal state — power distributed between Sydney (finance), Melbourne (culture/commerce), Brisbane. Rank-size rule applies, not primate city law.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 6</div>
+            <div class="aphg-concept">Typical Home</div>
+            <div class="aphg-desc">Detached single-family brick veneer on quarter-acre lot = iconic Australian suburban form. Belconnen/Tuggeranong: planned low-density car-dependent suburbia built into Griffin's master plan.</div>
+          </div>
+          <div class="aphg-card">
+            <div class="aphg-unit">Unit 2</div>
+            <div class="aphg-concept">DTM Stage 4 + In-migration</div>
+            <div class="aphg-desc">Low birth rate, low death rate. Australia is a major net in-migration destination — immigration from Asia and UK drives population growth.</div>
+          </div>
+        </div>
+      </div>
+      <div class="back-second-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Blue_Mountains_view_9_Echo_Point.jpg" alt="Blue Mountains Australia" style="opacity:.45">
+        <div class="back-second-img-overlay"></div>
+      </div>
+      <div class="back-footer">
+        <div class="back-footer-trip">AP Human Geography World Tour · 2026</div>
+        <div class="back-footer-page">07 / 07</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== OVERALL TRIP MAP ==================== -->
+<div class="country-section" id="c7">
+<div class="map-page">
+  <div class="map-hero">
+    <div class="map-kicker">Complete Route Overview</div>
+    <div class="map-title">World Tour Map</div>
+    <div class="map-sub">San Francisco -> Washington D.C. / New York -> Trinidad and Tobago -> Uruguay -> Nigeria -> France -> Taiwan -> Australia -> San Francisco</div>
+  </div>
+  <div class="map-body">
+    <div class="section-label">Route Map</div>
+    <div class="map-canvas" aria-label="Map of the APHG world tour route">
+      <svg class="route-svg" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+        <polyline class="route-line" points="160,147 287,142 329,220 344,347 520,225 506,114 838,181 914,348"></polyline>
+        <polyline class="route-return" points="914,348 1000,320"></polyline>
+        <polyline class="route-return" points="0,220 160,147"></polyline>
+      </svg>
+      <div class="map-point above" style="left:16%;top:29.4%" data-label="San Francisco">S</div>
+      <div class="map-point right" style="left:28.7%;top:28.4%" data-label="Washington D.C. / New York">1</div>
+      <div class="map-point right" style="left:32.9%;top:44%" data-label="Trinidad and Tobago">2</div>
+      <div class="map-point right" style="left:34.4%;top:69.4%" data-label="Uruguay">3</div>
+      <div class="map-point right" style="left:52%;top:45%" data-label="Nigeria">4</div>
+      <div class="map-point above" style="left:50.6%;top:22.8%" data-label="France">5</div>
+      <div class="map-point left" style="left:83.8%;top:36.2%" data-label="Taiwan">6</div>
+      <div class="map-point left" style="left:91.4%;top:69.6%" data-label="Australia">7</div>
+    </div>
+
+    <div class="map-trip-grid">
+      <div class="map-route-list">
+        <div class="section-label">Travel Sequence</div>
+        <ol>
+          <li><strong>Start:</strong> San Francisco Bay Area departure from SFO.</li>
+          <li><strong>United States:</strong> Washington D.C. and New York City.</li>
+          <li><strong>Caribbean:</strong> Port of Spain, Chaguanas, and Pointe-a-Pierre in Trinidad and Tobago.</li>
+          <li><strong>South America:</strong> Montevideo and Colonia del Sacramento, Uruguay.</li>
+          <li><strong>Sub-Saharan Africa:</strong> Lagos, Abuja, and Ondo State, Nigeria.</li>
+          <li><strong>Europe:</strong> Paris and Versailles, France.</li>
+          <li><strong>Asia:</strong> Taipei, Hsinchu, and Jiufen, Taiwan.</li>
+          <li><strong>Oceania:</strong> Canberra and the Blue Mountains, Australia, then return to SFO.</li>
+        </ol>
+      </div>
+      <div class="map-summary">
+        <div class="section-label">Trip Snapshot</div>
+        <div class="map-summary-row">
+          <span class="map-summary-label">Total stops</span>
+          <span class="map-summary-value">7 countries / territories</span>
+        </div>
+        <div class="map-summary-row">
+          <span class="map-summary-label">Regions covered</span>
+          <span class="map-summary-value">North America, Caribbean, South America, Africa, Europe, Asia, Oceania</span>
+        </div>
+        <div class="map-summary-row">
+          <span class="map-summary-label">Trip dates</span>
+          <span class="map-summary-value">June 3-24, 2026</span>
+        </div>
+        <div class="map-summary-row">
+          <span class="map-summary-label">Route pattern</span>
+          <span class="map-summary-value">West-to-east global loop</span>
+        </div>
+        <div class="map-note">Dashed line shows the final trans-Pacific return leg from Australia back to California.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div><!-- end page-wrap -->
+
+<script>
+function buildActivityMaps() {
+  document.querySelectorAll('.activity-map[data-tile-z]').forEach(map => {
+    if (map.querySelector('.osm-tiles')) return;
+
+    const z = Number(map.dataset.tileZ);
+    const centerX = Number(map.dataset.tileX);
+    const centerY = Number(map.dataset.tileY);
+    const tiles = document.createElement('div');
+    tiles.className = 'osm-tiles';
+
+    [-1, 0, 1].forEach((dx, col) => {
+      [0, 1].forEach((dy, row) => {
+        const img = document.createElement('img');
+        img.src = `https://tile.openstreetmap.org/${z}/${centerX + dx}/${centerY + dy}.png`;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.style.left = `${col * 33.333}%`;
+        img.style.top = `${row * 50}%`;
+        tiles.appendChild(img);
+      });
+    });
+
+    const credit = document.createElement('div');
+    credit.className = 'osm-credit';
+    credit.textContent = '© OpenStreetMap';
+    map.prepend(tiles);
+    map.appendChild(credit);
+  });
+}
+
+function show(idx, btn) {
+  document.querySelectorAll('.country-section').forEach((s,i) => {
+    s.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.nav-btn').forEach((b,i) => {
+    b.classList.toggle('active', i === idx);
+  });
+}
+
+buildActivityMaps();
+</script>
+</body>
+</html>
