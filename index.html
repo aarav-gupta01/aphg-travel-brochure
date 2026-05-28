@@ -140,34 +140,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
 .map-summary-value{font-weight:500;text-align:right}
 .map-note{font-size:10px;line-height:1.5;color:#6B5F52;margin-top:12px}
 
-/* ACTIVITY MAPS */
-.activity-map{height:170px;position:relative;overflow:hidden;border:0.5px solid var(--border);border-radius:4px;background:#F3F1E8;margin-top:8px}
-.activity-map::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);z-index:1;pointer-events:none}
-.osm-tiles{position:absolute;inset:0;z-index:0;background:#E8E5DA}
-.osm-tiles img{position:absolute;width:33.34%;height:50%;object-fit:cover}
-.osm-credit{position:absolute;right:4px;bottom:3px;z-index:5;background:rgba(255,255,255,.8);color:#5A4A3A;font-size:7px;padding:1px 4px;border-radius:2px}
-.map-water{display:none;position:absolute;z-index:1;background:#BFD8E8;border:1px solid rgba(88,124,148,.25);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
-.map-park{display:none;position:absolute;z-index:1;background:#C8DEB9;border:1px solid rgba(74,103,65,.22);border-radius:8px}
-.base-road{display:none;position:absolute;z-index:2;height:5px;background:#fff;border:1px solid #D8D0C4;border-radius:999px;box-shadow:0 1px 0 rgba(0,0,0,.04);transform-origin:left center}
-.base-road.major{height:7px;background:#F5D987;border-color:#D4B25E}
-.base-road.rail{height:3px;background:repeating-linear-gradient(90deg,#7F8FA3 0 8px,transparent 8px 13px);border:none}
-.map-label{display:none;position:absolute;z-index:2;color:#7A6E60;font-size:8px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;background:rgba(243,241,232,.7);padding:1px 4px;border-radius:3px;white-space:nowrap}
-.map-label.water{color:#4B7690;background:rgba(191,216,232,.65)}
-.map-label.park{color:#4A6741;background:rgba(200,222,185,.72)}
-.activity-route{position:absolute;inset:0;width:100%;height:100%;z-index:3}
-.activity-route path,.activity-route polyline{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-.route-walk{stroke:var(--gold)}
-.route-transit{stroke:var(--slate)}
-.route-drive{stroke:var(--sage)}
-.route-flight{stroke:var(--rust);stroke-dasharray:8 7}
-.activity-pin{position:absolute;z-index:4;transform:translate(-50%,-50%);background:var(--ink);color:var(--cream);border:2px solid var(--gold);border-radius:3px;padding:3px 6px;font-size:9px;font-weight:500;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.18)}
-.activity-pin.major{background:var(--rust);border-color:var(--gold-light)}
-.activity-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.legend-chip{font-size:9px;color:#5A4A3A;display:flex;align-items:center;gap:4px}
-.legend-chip::before{content:'';width:18px;height:3px;border-radius:3px;background:var(--gold)}
-.legend-chip.transit::before{background:var(--slate)}
-.legend-chip.drive::before{background:var(--sage)}
-.legend-chip.flight::before{background:var(--rust)}
+/* COUNTRY INLINE IMAGES */
+.country-inline-img{height:170px;position:relative;overflow:hidden;border:0.5px solid var(--border);border-radius:4px;background:var(--cream);margin-top:8px}
+.country-inline-img img{width:100%;height:100%;object-fit:cover;display:block}
+.country-inline-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,22,18,0) 45%,rgba(26,22,18,.28) 100%)}
 </style>
 </head>
 <body>
@@ -243,29 +219,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
         </div>
       </div>
       <div>
-        <div class="section-label">Activity Map</div>
-        <div class="activity-map" data-tile-z="11" data-tile-x="585" data-tile-y="783" aria-label="USA activity route map">
-          <div class="map-water" style="left:72%;top:4%;width:26%;height:46%;border-radius:0 0 0 45%"></div>
-          <div class="map-park" style="left:11%;top:46%;width:49%;height:16%"></div>
-          <div class="base-road major" style="left:10%;top:64%;width:55%;transform:rotate(-10deg)"></div>
-          <div class="base-road" style="left:22%;top:34%;width:44%;transform:rotate(24deg)"></div>
-          <div class="base-road rail" style="left:58%;top:43%;width:38%;transform:rotate(-30deg)"></div>
-          <span class="map-label park" style="left:28%;top:50%">National Mall</span>
-          <span class="map-label water" style="left:75%;top:10%">East River</span>
-          <span class="map-label" style="left:78%;top:27%">Manhattan</span>
-          <span class="map-label" style="left:68%;top:44%">Brooklyn</span>
-          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="route-walk" points="12,68 27,56 43,52 58,44"></polyline>
-            <path class="route-transit" d="M58,44 C72,30 84,25 91,17"></path>
-            <polyline class="route-walk" points="91,17 83,30 76,40"></polyline>
-          </svg>
-          <span class="activity-pin major" style="left:12%;top:68%">Lincoln</span>
-          <span class="activity-pin" style="left:43%;top:52%">Monument</span>
-          <span class="activity-pin" style="left:58%;top:44%">Capitol</span>
-          <span class="activity-pin major" style="left:91%;top:17%">NYC</span>
-          <span class="activity-pin" style="left:76%;top:40%">Brooklyn Bridge</span>
+        <div class="section-label">Country Image</div>
+        <div class="country-inline-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manhattan_from_Weehawken%2C_NJ.jpg" alt="New York City skyline">
         </div>
-        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">Train / Metro</span></div>
       </div>
       <div>
         <div class="section-label">In-Country Transport</div>
@@ -385,30 +342,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
         </div>
       </div>
       <div>
-        <div class="section-label">Activity Map</div>
-        <div class="activity-map" data-tile-z="11" data-tile-x="674" data-tile-y="962" aria-label="Trinidad and Tobago activity route map">
-          <div class="map-water" style="left:0;top:0;width:100%;height:18%;border-radius:0 0 55% 40%"></div>
-          <div class="map-park" style="left:29%;top:25%;width:22%;height:18%"></div>
-          <div class="base-road major" style="left:18%;top:34%;width:70%;transform:rotate(5deg)"></div>
-          <div class="base-road" style="left:43%;top:38%;width:42%;transform:rotate(56deg)"></div>
-          <div class="base-road" style="left:38%;top:39%;width:30%;transform:rotate(82deg)"></div>
-          <span class="map-label water" style="left:9%;top:4%">Gulf of Paria</span>
-          <span class="map-label park" style="left:32%;top:30%">Queen's Park</span>
-          <span class="map-label" style="left:57%;top:33%">Eastern Main Rd</span>
-          <span class="map-label" style="left:57%;top:73%">Central Trinidad</span>
-          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="route-walk" points="22,30 34,35 42,32"></polyline>
-            <path class="route-transit" d="M42,32 C58,18 72,18 82,28"></path>
-            <path class="route-drive" d="M42,32 C45,58 54,72 64,82"></path>
-            <path class="route-drive" d="M64,82 C74,78 82,70 88,58"></path>
-          </svg>
-          <span class="activity-pin major" style="left:22%;top:30%">Port of Spain</span>
-          <span class="activity-pin" style="left:42%;top:32%">Savannah</span>
-          <span class="activity-pin" style="left:82%;top:28%">Maracas Bay</span>
-          <span class="activity-pin" style="left:64%;top:82%">Chaguanas</span>
-          <span class="activity-pin" style="left:88%;top:58%">Caroni</span>
+        <div class="section-label">Country Image</div>
+        <div class="country-inline-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/QPSpicfromhilton23.jpg" alt="Queen's Park Savannah Trinidad">
         </div>
-        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">Maxi-taxi</span><span class="legend-chip drive">Route taxi / car</span></div>
       </div>
       <div>
         <div class="section-label">In-Country Transport</div>
@@ -528,29 +465,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
         </div>
       </div>
       <div>
-        <div class="section-label">Activity Map</div>
-        <div class="activity-map" data-tile-z="11" data-tile-x="704" data-tile-y="1235" aria-label="Uruguay activity route map">
-          <div class="map-water" style="left:0;top:0;width:36%;height:100%;border-radius:0 45% 45% 0"></div>
-          <div class="map-water" style="left:38%;top:74%;width:60%;height:24%;border-radius:45% 0 0 0"></div>
-          <div class="map-park" style="left:47%;top:54%;width:20%;height:18%"></div>
-          <div class="base-road major" style="left:31%;top:45%;width:48%;transform:rotate(-5deg)"></div>
-          <div class="base-road" style="left:43%;top:31%;width:32%;transform:rotate(54deg)"></div>
-          <div class="base-road rail" style="left:15%;top:39%;width:48%;transform:rotate(9deg)"></div>
-          <span class="map-label water" style="left:5%;top:17%">Rio de la Plata</span>
-          <span class="map-label" style="left:55%;top:36%">Ciudad Vieja</span>
-          <span class="map-label park" style="left:49%;top:59%">Rambla</span>
-          <span class="map-label" style="left:12%;top:31%">Colonia</span>
-          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="route-walk" points="62,42 52,52 42,55 34,64"></polyline>
-            <path class="route-transit" d="M62,42 C44,25 27,25 15,38"></path>
-            <path class="route-transit" d="M15,38 C28,53 44,58 62,42"></path>
-          </svg>
-          <span class="activity-pin major" style="left:62%;top:42%">Montevideo</span>
-          <span class="activity-pin" style="left:52%;top:52%">Plaza</span>
-          <span class="activity-pin" style="left:34%;top:64%">Rambla</span>
-          <span class="activity-pin major" style="left:15%;top:38%">Colonia</span>
+        <div class="section-label">Country Image</div>
+        <div class="country-inline-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Palacio_Salvo_Montevideo_Uruguay.jpg" alt="Palacio Salvo Montevideo Uruguay">
         </div>
-        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">Ferry / bus</span></div>
       </div>
       <div>
         <div class="section-label">In-Country Transport</div>
@@ -669,29 +587,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
         </div>
       </div>
       <div>
-        <div class="section-label">Activity Map</div>
-        <div class="activity-map" data-tile-z="11" data-tile-x="1043" data-tile-y="986" aria-label="Nigeria activity route map">
-          <div class="map-water" style="left:0;top:62%;width:48%;height:34%;border-radius:0 45% 0 0"></div>
-          <div class="map-park" style="left:53%;top:56%;width:22%;height:28%"></div>
-          <div class="base-road major" style="left:18%;top:62%;width:35%;transform:rotate(4deg)"></div>
-          <div class="base-road major" style="left:58%;top:32%;width:28%;transform:rotate(-38deg)"></div>
-          <div class="base-road rail" style="left:47%;top:63%;width:38%;transform:rotate(-58deg)"></div>
-          <span class="map-label water" style="left:8%;top:78%">Lagos Lagoon</span>
-          <span class="map-label" style="left:20%;top:49%">Lagos Island</span>
-          <span class="map-label" style="left:72%;top:18%">Abuja</span>
-          <span class="map-label park" style="left:56%;top:66%">Cocoa Belt</span>
-          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="route-walk" points="22,62 34,54 45,66"></polyline>
-            <path class="route-flight" d="M45,66 C58,38 70,28 78,22"></path>
-            <polyline class="route-drive" points="78,22 68,42 57,68"></polyline>
-          </svg>
-          <span class="activity-pin major" style="left:22%;top:62%">Lagos</span>
-          <span class="activity-pin" style="left:34%;top:54%">Museum</span>
-          <span class="activity-pin" style="left:45%;top:66%">Balogun</span>
-          <span class="activity-pin major" style="left:78%;top:22%">Abuja</span>
-          <span class="activity-pin" style="left:57%;top:68%">Ondo Cocoa</span>
+        <div class="section-label">Country Image</div>
+        <div class="country-inline-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Abuja_Skyline.jpg" alt="Abuja skyline Nigeria">
         </div>
-        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip flight">Domestic flight</span><span class="legend-chip drive">Car hire</span></div>
       </div>
       <div>
         <div class="section-label">In-Country Transport</div>
@@ -811,30 +710,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
         </div>
       </div>
       <div>
-        <div class="section-label">Activity Map</div>
-        <div class="activity-map" data-tile-z="11" data-tile-x="1037" data-tile-y="704" aria-label="France activity route map">
-          <div class="map-water" style="left:37%;top:48%;width:45%;height:10%;border-radius:999px;transform:rotate(-18deg)"></div>
-          <div class="map-park" style="left:10%;top:63%;width:20%;height:18%"></div>
-          <div class="map-park" style="left:58%;top:23%;width:18%;height:15%"></div>
-          <div class="base-road major" style="left:36%;top:58%;width:42%;transform:rotate(-20deg)"></div>
-          <div class="base-road" style="left:48%;top:29%;width:27%;transform:rotate(88deg)"></div>
-          <div class="base-road rail" style="left:17%;top:72%;width:42%;transform:rotate(-12deg)"></div>
-          <span class="map-label water" style="left:48%;top:49%">Seine</span>
-          <span class="map-label" style="left:51%;top:61%">Central Paris</span>
-          <span class="map-label park" style="left:11%;top:68%">Versailles</span>
-          <span class="map-label" style="left:64%;top:25%">Montmartre</span>
-          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="route-walk" points="56,58 48,48 54,38 64,32"></polyline>
-            <path class="route-transit" d="M56,58 C40,66 28,68 18,72"></path>
-            <path class="route-drive" d="M18,72 C32,82 52,82 70,70"></path>
-          </svg>
-          <span class="activity-pin major" style="left:56%;top:58%">Paris</span>
-          <span class="activity-pin" style="left:48%;top:48%">Orsay</span>
-          <span class="activity-pin" style="left:64%;top:32%">Montmartre</span>
-          <span class="activity-pin major" style="left:18%;top:72%">Versailles</span>
-          <span class="activity-pin" style="left:70%;top:70%">Renault</span>
+        <div class="section-label">Country Image</div>
+        <div class="country-inline-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ch%C3%A2teau_de_Versailles_-_Nuit.jpg" alt="Versailles France">
         </div>
-        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip transit">RER / Metro</span><span class="legend-chip drive">Drive-by</span></div>
       </div>
       <div>
         <div class="section-label">In-Country Transport</div>
@@ -954,29 +833,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
         </div>
       </div>
       <div>
-        <div class="section-label">Activity Map</div>
-        <div class="activity-map" data-tile-z="11" data-tile-x="1715" data-tile-y="876" aria-label="Taiwan activity route map">
-          <div class="map-water" style="left:78%;top:0;width:22%;height:100%;border-radius:45% 0 0 45%"></div>
-          <div class="map-park" style="left:63%;top:23%;width:19%;height:24%"></div>
-          <div class="base-road major" style="left:28%;top:70%;width:52%;transform:rotate(-44deg)"></div>
-          <div class="base-road" style="left:43%;top:31%;width:25%;transform:rotate(58deg)"></div>
-          <div class="base-road rail" style="left:28%;top:77%;width:31%;transform:rotate(-46deg)"></div>
-          <span class="map-label water" style="left:84%;top:53%">Pacific</span>
-          <span class="map-label" style="left:41%;top:27%">Taipei Basin</span>
-          <span class="map-label park" style="left:66%;top:31%">Mountain towns</span>
-          <span class="map-label" style="left:20%;top:80%">Hsinchu</span>
-          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="route-walk" points="48,34 56,42 62,54"></polyline>
-            <path class="route-transit" d="M48,34 C35,45 30,62 26,78"></path>
-            <path class="route-drive" d="M48,34 C65,28 78,30 88,40"></path>
-          </svg>
-          <span class="activity-pin major" style="left:48%;top:34%">Taipei</span>
-          <span class="activity-pin" style="left:56%;top:42%">CKS Hall</span>
-          <span class="activity-pin" style="left:62%;top:54%">Taipei 101</span>
-          <span class="activity-pin major" style="left:26%;top:78%">Hsinchu</span>
-          <span class="activity-pin" style="left:88%;top:40%">Jiufen</span>
+        <div class="section-label">Country Image</div>
+        <div class="country-inline-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2015-05-11_Jiufen_Old_Street.jpg" alt="Jiufen Taiwan">
         </div>
-        <div class="activity-legend"><span class="legend-chip">Walking / MRT</span><span class="legend-chip transit">HSR</span><span class="legend-chip drive">Bus</span></div>
       </div>
       <div>
         <div class="section-label">In-Country Transport</div>
@@ -1110,30 +970,10 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
         </div>
       </div>
       <div>
-        <div class="section-label">Activity Map</div>
-        <div class="activity-map" data-tile-z="11" data-tile-x="1872" data-tile-y="1238" aria-label="Australia activity route map">
-          <div class="map-water" style="left:43%;top:53%;width:27%;height:10%;border-radius:999px;transform:rotate(-12deg)"></div>
-          <div class="map-park" style="left:74%;top:13%;width:20%;height:22%"></div>
-          <div class="map-park" style="left:24%;top:47%;width:34%;height:24%"></div>
-          <div class="base-road major" style="left:27%;top:64%;width:33%;transform:rotate(-32deg)"></div>
-          <div class="base-road major" style="left:55%;top:54%;width:35%;transform:rotate(-42deg)"></div>
-          <div class="base-road rail" style="left:30%;top:80%;width:61%;transform:rotate(-50deg)"></div>
-          <span class="map-label water" style="left:44%;top:55%">Lake Burley Griffin</span>
-          <span class="map-label park" style="left:31%;top:54%">Parliamentary Zone</span>
-          <span class="map-label park" style="left:75%;top:20%">Blue Mountains</span>
-          <span class="map-label" style="left:24%;top:74%">Canberra</span>
-          <svg class="activity-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="route-walk" points="28,62 36,52 46,45 55,56"></polyline>
-            <path class="route-drive" d="M55,56 C68,38 78,30 88,22"></path>
-            <path class="route-transit" d="M88,22 C72,58 52,75 30,82"></path>
-          </svg>
-          <span class="activity-pin major" style="left:28%;top:62%">Canberra</span>
-          <span class="activity-pin" style="left:36%;top:52%">Parliament</span>
-          <span class="activity-pin" style="left:55%;top:56%">Lake</span>
-          <span class="activity-pin major" style="left:88%;top:22%">Blue Mtns</span>
-          <span class="activity-pin" style="left:30%;top:82%">CBR</span>
+        <div class="section-label">Country Image</div>
+        <div class="country-inline-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Blue_Mountains_view_9_Echo_Point.jpg" alt="Blue Mountains Australia">
         </div>
-        <div class="activity-legend"><span class="legend-chip">Walking</span><span class="legend-chip drive">Drive</span><span class="legend-chip transit">Return transit</span></div>
       </div>
       <div>
         <div class="section-label">In-Country Transport</div>
@@ -1265,36 +1105,6 @@ body{background:#E8E2D8;font-family:'DM Sans',sans-serif;color:var(--ink)}
 </div><!-- end page-wrap -->
 
 <script>
-function buildActivityMaps() {
-  document.querySelectorAll('.activity-map[data-tile-z]').forEach(map => {
-    if (map.querySelector('.osm-tiles')) return;
-
-    const z = Number(map.dataset.tileZ);
-    const centerX = Number(map.dataset.tileX);
-    const centerY = Number(map.dataset.tileY);
-    const tiles = document.createElement('div');
-    tiles.className = 'osm-tiles';
-
-    [-1, 0, 1].forEach((dx, col) => {
-      [0, 1].forEach((dy, row) => {
-        const img = document.createElement('img');
-        img.src = `https://tile.openstreetmap.org/${z}/${centerX + dx}/${centerY + dy}.png`;
-        img.alt = '';
-        img.loading = 'lazy';
-        img.style.left = `${col * 33.333}%`;
-        img.style.top = `${row * 50}%`;
-        tiles.appendChild(img);
-      });
-    });
-
-    const credit = document.createElement('div');
-    credit.className = 'osm-credit';
-    credit.textContent = '© OpenStreetMap';
-    map.prepend(tiles);
-    map.appendChild(credit);
-  });
-}
-
 function show(idx, btn) {
   document.querySelectorAll('.country-section').forEach((s,i) => {
     s.classList.toggle('active', i === idx);
@@ -1303,8 +1113,6 @@ function show(idx, btn) {
     b.classList.toggle('active', i === idx);
   });
 }
-
-buildActivityMaps();
 </script>
 </body>
 </html>

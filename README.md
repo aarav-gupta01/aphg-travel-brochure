@@ -55,9 +55,8 @@ The project does not require local image files. It loads remote assets from:
 
 - Google Fonts
 - Wikimedia Commons images
-- OpenStreetMap map tiles
 
-An internet connection is required for the fonts, images, and map backgrounds to load correctly.
+An internet connection is required for the fonts and images to load correctly.
 
 ## Project Structure
 
@@ -66,4 +65,3 @@ An internet connection is required for the fonts, images, and map backgrounds to
 ├── index.html
 └── README.md
 ```
-
